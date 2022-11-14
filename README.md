@@ -6,8 +6,9 @@
 ### Unofficial API for Prima banka’s currency rate sell/buy list
 
   
+v0.0.x - API can only scrape info about Czech Koruna (CZK) for now.
 
-v0.0.x - API can only scrape info about Czech crowns (CZK) for now.
+#### NPM package: https://www.npmjs.com/package/primabankapi
 
   
 
@@ -25,20 +26,19 @@ const api =  require("primabankapi");
 
 >All functions returns promise that needs to be resolved
 
+### Commands
+
+> Calling function without parameter `roundAt` returns response with five decimal places
+
+>Maximum decial places that site is providing is 5
+
 ### **.getSellRate(?roundAt)**
 
 Returns sell rate of CZK for today
 
 ```javascript
-var response = await api.getSellRate(4)
-console.log(response) //ex. output 24.9840
-```
-
-> Calling function without parameter "roundAt" returns response with zero decimal places
-
-```javascript
-var response =  await api.getSellRate()
-console.log(response) //ex. output 24
+var response = await api.getSellRate()
+console.log(response) //ex. output 24.98400
 ```
 
 ### **.getBuyRate(?roundAt)**
@@ -46,32 +46,24 @@ console.log(response) //ex. output 24
 Returns buy rate of CZK for today
 
 ```javascript
-var response = await api.getBuyRate(4)
-console.log(response) //ex. output 25.1240
-```
-
-> Calling function without parameter "roundAt" returns response with zero decimal places
-
-```javascript
-var response =  await api.getBuyRate()
-console.log(response) //ex. output 25
+var response = await api.getBuyRate()
+console.log(response) //ex. output 25.12400
 ```  
 
 ### **.getMiddleRate(?roundAt)**
 
 Returns middle rate of CZK for today
 ```javascript
-var response = await api.getMiddleRate(4)
-console.log(response) //ex. output 24.3440
+var response = await api.getMiddleRate()
+console.log(response) //ex. output 24.34400
 ```
 
-> Calling function without parameter "roundAt" returns response with zero decimal places
+## Future plans
+v1.0.0 is going to be able to scrape `currency/EUR` rate of all of six curencies from website:
 
-```javascript
-var response =  await api.getMiddleRate()
-console.log(response) //ex. output 24
-```  
-
-## Example usage
-
-Comming soon
+ - USD - US Dollar
+ - CZK - Czech Koruna
+ - GBP - British Pound
+ - HUF - Hungarian Forint
+ - PLN - Polish Zloty
+ - CHF - Swiss Franc
