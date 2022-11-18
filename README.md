@@ -10,7 +10,7 @@
 ### Unofficial API for Prima banka’s [currency rate sell/buy list ]("https://www.primabanka.sk/kurzovy-listok")
 
 
-#### Source code: https://github.com/Kukyn/primabankapi
+#### NPM package: https://www.npmjs.com/package/primabankapi
 
   
 
