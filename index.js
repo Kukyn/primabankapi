@@ -1,44 +1,60 @@
 const axios = require("axios")
 const cheerio = require("cheerio")
+const currencies = ["USD","CZK","GBP","HUF","PLN","CHF"]
+const requestURL = (date,currency) => `https://www.primabanka.sk/kurzovy-listok?currency=${currency}&date=${date}&interval=1`
 
-const requestURL = (date) => `https://www.primabanka.sk/kurzovy-listok?currency=CZK&date=${date}&interval=1`
 
-
-const getSellRate = async (roundAt)=>{
+const getSellRate = async (currency,roundAt)=>{
+    this.infoNumber = 4
+    this.round = roundAt || 5
     try{
-        const round = roundAt || 0
-        const request = await (axios.get(requestURL(date())))        
-        const $  = cheerio.load(request.data)
-        const response = $($("tr[class='selected' ] td")[4]).text().replace(",",".")
-        return (parseFloat(response).toFixed(round))
-    }catch(err){
-        console.log(err)
-    }
+        if(!currencies.includes(currency)){
+         throw `Cannot find currency "${currency}"`
+        }
+         const response = await scrapper(currency,this.infoNumber)
+         return response.toFixed(this.round)
+     }catch(err){
+         console.log(err)
+     }
    
 }
-const getBuyRate = async (roundAt)=>{
+const getBuyRate = async (currency,roundAt)=>{
+    this.infoNumber = 3
+    this.round = roundAt || 5
     try{
-        const round = roundAt || 0
-        const request = await (axios.get(requestURL(date())))        
-        const $  = cheerio.load(request.data)
-        const response = $($("tr[class='selected' ] td")[3]).text().replace(",",".")
-        return parseFloat(response).toFixed(round)
-    }catch(err){
-        console.log(err)
-    }
+        if(!currencies.includes(currency)){
+         throw `Cannot find currency "${currency}"`
+        }
+         const response = await scrapper(currency,this.infoNumber)
+         return response.toFixed(this.round)
+     }catch(err){
+         console.log(err)
+     }
    
 }
-const getMiddleRate = async (roundAt)=>{
+const getMiddleRate = async (currency,roundAt)=>{
+    this.infoNumber = 2
+    this.round = roundAt || 5
     try{
-        const round = roundAt || 1
-        const request = await (axios.get(requestURL(date())))        
+        if(!currencies.includes(currency)){
+         throw `Cannot find currency "${currency}"`
+        }
+         const response = await scrapper(currency,this.infoNumber)
+         return response.toFixed(this.round)
+     }catch(err){
+         console.log(err)
+     }
+   
+}
+async function scrapper(currency,infoNumber){
+    try{
+        const request = await (axios.get(requestURL(date(),currency)))        
         const $  = cheerio.load(request.data)
-        const response = $($("tr[class='selected' ] td")[2]).text().replace(",",".")
-        return parseFloat(response).toFixed(round)
+        const response = $($("tr[class='selected' ] td")[infoNumber]).text().replace(",",".")
+        return parseFloat(response)
     }catch(err){
         console.log(err)
     }
-   
 }
 
 const date = () =>{
