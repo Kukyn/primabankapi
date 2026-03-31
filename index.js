@@ -1,4 +1,3 @@
-let axios = require("axios")
 let cheerio = require("cheerio")
 let logger = require("./modules/logger.js")
 let currencies = ["USD","CZK","GBP","HUF","PLN","CHF"]
@@ -15,8 +14,8 @@ let getRate = async(currency, roundAt, targetOffset)=>{
     roundAt = roundAt || 5
     try{
         if(!currencies.includes(currency)){throw `Cannot find currency: \u001b[1;31m${currency}\u001b[0m`}
-        let request = await (axios.get(requestURL(date(),currency)))        
-        let $  = cheerio.load(request.data)
+        let request = await fetch(requestURL(date(),currency)).then(res => res.text())      
+        let $  = cheerio.load(request)
         let response = $($("tr[class='selected' ] td")[targetOffset]).text().replace(",",".")
         return parseFloat(response).toFixed(roundAt)
     }catch(err){    
